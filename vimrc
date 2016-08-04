@@ -27,10 +27,18 @@ set wrap "Wrap lines
 set relativenumber
 set number
 set laststatus=2
-
+set ttimeoutlen=50
+set encoding=utf-8
+set guifont=Source\ Code\ Pro\ for\ Powerline
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
+if !exists('g:airline_symbols')
+      let g:airline_symbols = {}
+  endif
+  let g:airline_symbols.space = "\ua0"
 
 " Shortcuts "
-nnoremap <leader>no :noh<CR>
+nnoremap <leader>nh :noh<CR>
 
 if has("mouse")
 	set mouse=a
@@ -53,6 +61,16 @@ Plug 'vim-scripts/AutoComplPop'
 " Air line "
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+let g:airline_powerline_fonts = 1
+
+" Fugitive Git Wrapper "
+Plug 'tpope/vim-fugitive'
+
+" Surround "
+Plug 'tpope/vim-surround'
+"
+" Multi Cursors"
+Plug 'terryma/vim-multiple-cursors'
 
 call plug#end()
 
