@@ -13,7 +13,7 @@ set expandtab
 let mapleader = ","
 
 " Visual "
-set so=7
+set so=40
 set ruler
 syntax enable
 set smarttab
@@ -29,13 +29,8 @@ set number
 set laststatus=2
 set ttimeoutlen=50
 set encoding=utf-8
-set guifont=Source\ Code\ Pro\ for\ Powerline
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts = 1
-if !exists('g:airline_symbols')
-      let g:airline_symbols = {}
-  endif
-  let g:airline_symbols.space = "\ua0"
+hi Search cterm=NONE ctermfg=black ctermbg=blue
+let g:netrw_liststyle=3 "Explorer Style
 
 " Shortcuts "
 nnoremap <leader>nh :noh<CR>
@@ -44,7 +39,14 @@ if has("mouse")
 	set mouse=a
 endif
 
-
+" Airline Specific "
+set guifont=Source\ Code\ Pro\ for\ Powerline
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
+if !exists('g:airline_symbols')
+      let g:airline_symbols = {}
+endif
+let g:airline_symbols.space = "\ua0"
 
 " Vim Plug "
 call plug#begin('~/.vim/plugged')
@@ -62,6 +64,7 @@ Plug 'vim-scripts/AutoComplPop'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 let g:airline_powerline_fonts = 1
+Plug 'edkolev/promptline.vim'
 
 " Fugitive Git Wrapper "
 Plug 'tpope/vim-fugitive'
@@ -71,12 +74,13 @@ Plug 'tpope/vim-surround'
 "
 " Multi Cursors"
 Plug 'terryma/vim-multiple-cursors'
+" let g:multi_cursor_use_default_mapping=0
+" let g:multi_cursor_next_key='<C-d>'
+" let g:multi_cursor_quit_key='<Esc>'
 
 call plug#end()
 
-
 " Base16 "
-
 if filereadable(expand("~/.vimrc_background"))
   let base16colorspace=256
   source ~/.vimrc_background
