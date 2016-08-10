@@ -8,8 +8,8 @@ I then use a combination a iterm base16shell, and base16shell6vim themes.
 [base16-shell](https://github.com/chriskempson/base16-shell)
 
 ###Installation
-- clone repo into .vim
-    git clone https://github.com/oscarmorrison/vimrc.git .vimrc
-- Symlink .vimrc 
-    ln -s ./vim/vimrc ~/.vimrc
+- clone repo into .vim  
+        `git clone https://github.com/oscarmorrison/vimrc.git .vim`
+- Symlink .vimrc   
+        `ln -s ~/.vim/vimrc ~/.vimrc`
     
