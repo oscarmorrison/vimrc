@@ -36,6 +36,7 @@ let mapleader = ","
 nnoremap <leader>/ :noh<CR>
 nnoremap <leader>n :NERDTreeToggle<CR>
 nnoremap <leader>f :NERDTreeFind<CR>
+nnoremap <leader>o o<Esc>
 
 if has("mouse")
 	set mouse=a
@@ -73,8 +74,18 @@ Plug 'tpope/vim-surround'
 Plug 'terryma/vim-multiple-cursors'
 
 Plug 'scrooloose/syntastic'
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 
 Plug 'scrooloose/nerdtree'
+
+Plug 'jiangmiao/auto-pairs'
+
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 call plug#end()
@@ -84,3 +95,6 @@ if filereadable(expand("~/.vimrc_background"))
   let base16colorspace=256
   source ~/.vimrc_background
 endif
+
+hi IncSearch cterm=NONE ctermbg=lightblue
+hi Search cterm=NONE ctermbg=lightblue
