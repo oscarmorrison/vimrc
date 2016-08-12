@@ -12,7 +12,7 @@ set incsearch
 set expandtab
 
 " Visual "
-set so=40
+" set so=40
 set ruler
 syntax enable
 set smarttab
@@ -85,6 +85,10 @@ let g:syntastic_check_on_wq = 0
 Plug 'scrooloose/nerdtree'
 
 Plug 'jiangmiao/auto-pairs'
+
+Plug 'itchyny/vim-cursorword'
+
+Plug 'timakro/vim-searchant'
 
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
