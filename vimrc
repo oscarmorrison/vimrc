@@ -35,7 +35,12 @@ let mapleader = ","
 nnoremap <leader>h :execute Normal<Plug>SearchantStop
 nnoremap <leader>n :NERDTreeToggle<CR>
 nnoremap <leader>f :NERDTreeFind<CR>
-nnoremap <leader>o o<Esc>
+nnoremap <leader>t :Files<CR>
+nnoremap <leader>b :Buffers<CR>
+nnoremap <leader>g :Commits<CR>
+nnoremap <leader>m :bn<CR>
+nnoremap <leader>M :bp<CR>
+
 let g:searchant_map_stop = 0
 nmap <leader>/ <Plug>SearchantStop
 
@@ -60,16 +65,12 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'chriskempson/base16-vim'
 
-Plug 'wincent/command-t'
-
 Plug 'vim-scripts/AutoComplPop'
 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 let g:airline_powerline_fonts = 1
 Plug 'edkolev/promptline.vim'
-
-Plug 'tpope/vim-fugitive'
 
 Plug 'tpope/vim-surround'
 "
@@ -84,15 +85,25 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
-Plug 'scrooloose/nerdtree'
-
 Plug 'jiangmiao/auto-pairs'
 
 Plug 'itchyny/vim-cursorword'
 
 Plug 'timakro/vim-searchant'
 
+Plug 'scrooloose/nerdtree'
+
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'  }
+Plug 'junegunn/fzf.vim'
+
+Plug 'tpope/vim-fugitive'
+
+Plug 'tpope/vim-sensible'
+
+Plug 'neilagabriel/vim-geeknote'
+let g:GeeknoteFormat="markdown"
 
 call plug#end()
 
@@ -105,3 +116,4 @@ endif
 highlight IncSearch cterm=NONE ctermbg=lightblue
 highlight Search cterm=NONE ctermbg=lightblue
 highlight SearchCurrent ctermfg=DarkGrey ctermbg=white
+nnoremap <leader>m :bn<CR>
