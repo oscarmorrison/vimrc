@@ -28,15 +28,17 @@ set number
 set laststatus=2
 set ttimeoutlen=50
 set encoding=utf-8
-hi Search cterm=NONE ctermfg=black ctermbg=blue
 let g:netrw_liststyle=3 "Explorer Style
 
 " Shortcuts "
 let mapleader = ","
-nnoremap <leader>/ :noh<CR>
+nnoremap <leader>h :execute Normal<Plug>SearchantStop
 nnoremap <leader>n :NERDTreeToggle<CR>
 nnoremap <leader>f :NERDTreeFind<CR>
 nnoremap <leader>o o<Esc>
+let g:searchant_map_stop = 0
+nmap <leader>/ <Plug>SearchantStop
+
 
 if has("mouse")
 	set mouse=a
@@ -100,5 +102,6 @@ if filereadable(expand("~/.vimrc_background"))
   source ~/.vimrc_background
 endif
 
-hi IncSearch cterm=NONE ctermbg=lightblue
-hi Search cterm=NONE ctermbg=lightblue
+highlight IncSearch cterm=NONE ctermbg=lightblue
+highlight Search cterm=NONE ctermbg=lightblue
+highlight SearchCurrent ctermfg=DarkGrey ctermbg=white
