@@ -10,6 +10,8 @@ set smartcase
 set hlsearch
 set incsearch
 set expandtab
+set wildmenu
+set backspace=indent,eol,start
 
 " Visual "
 " set so=40
@@ -73,7 +75,7 @@ let g:airline_powerline_fonts = 1
 Plug 'edkolev/promptline.vim'
 
 Plug 'tpope/vim-surround'
-"
+
 Plug 'terryma/vim-multiple-cursors'
 
 Plug 'scrooloose/syntastic'
@@ -100,10 +102,10 @@ Plug 'junegunn/fzf.vim'
 
 Plug 'tpope/vim-fugitive'
 
-Plug 'tpope/vim-sensible'
-
 Plug 'neilagabriel/vim-geeknote'
 let g:GeeknoteFormat="markdown"
+
+Plug 'airblade/vim-gitgutter'
 
 call plug#end()
 
