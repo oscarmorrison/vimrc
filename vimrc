@@ -15,6 +15,7 @@ set backspace=indent,eol,start
 
 " Autocomplete
 set completeopt=longest,menuone
+set splitbelow
 
 " Visual "
 " set so=40
@@ -41,14 +42,19 @@ nnoremap <leader>n :NERDTreeToggle<CR>
 nnoremap <leader>f :NERDTreeFind<CR>
 nnoremap <leader>t :Files<CR>
 nnoremap <leader>b :Buffers<CR>
-nnoremap <leader>g :Commits<CR>
+nnoremap <leader>G :Commits<CR>
 nnoremap <leader>m :bn<CR>
 nnoremap <leader>M :bp<CR>
-nnoremap <leader>w :Bclose<CR>
+nnoremap <leader>B :Bclose<CR>
+nnoremap <leader>W :bd<CR>
 noremap <leader>e :Geeknote<CR>
 noremap <leader>c :reg<CR>
-noremap <leader>s :lclose<CR>
-noremap <leader>S :Errors<CR>
+noremap <leader>c :lclose<CR>
+noremap <leader>C :Errors<CR>
+noremap <leader>g :TernDef<CR>
+noremap <leader>d :TernDoc<CR>
+noremap <leader>r :TernRename<CR>
+
 
 let g:searchant_map_stop = 0
 nmap <leader>/ <Plug>SearchantStop
@@ -115,6 +121,9 @@ let g:GeeknoteFormat="markdown"
 Plug 'ternjs/tern_for_vim'
 
 Plug 'valloric/youcompleteme'
+let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_add_preview_to_completeopt = 0
+set completeopt-=preview
 
 call plug#end()
 
@@ -127,4 +136,3 @@ endif
 highlight IncSearch cterm=NONE ctermbg=lightblue
 highlight Search cterm=NONE ctermbg=lightblue
 highlight SearchCurrent ctermfg=DarkGrey ctermbg=white
-nnoremap <leader>m :bn<CR>
