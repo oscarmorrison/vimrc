@@ -125,6 +125,8 @@ let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_add_preview_to_completeopt = 0
 set completeopt-=preview
 
+Plug 'tpope/vim-commentary'
+
 call plug#end()
 
 " Base16 "
