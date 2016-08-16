@@ -13,6 +13,9 @@ set expandtab
 set wildmenu
 set backspace=indent,eol,start
 
+" Autocomplete
+set completeopt=longest,menuone
+
 " Visual "
 " set so=40
 set ruler
@@ -34,7 +37,6 @@ let g:netrw_liststyle=3 "Explorer Style
 
 " Shortcuts "
 let mapleader = ","
-nnoremap <leader>h :execute Normal<Plug>SearchantStop
 nnoremap <leader>n :NERDTreeToggle<CR>
 nnoremap <leader>f :NERDTreeFind<CR>
 nnoremap <leader>t :Files<CR>
@@ -42,6 +44,11 @@ nnoremap <leader>b :Buffers<CR>
 nnoremap <leader>g :Commits<CR>
 nnoremap <leader>m :bn<CR>
 nnoremap <leader>M :bp<CR>
+nnoremap <leader>w :Bclose<CR>
+noremap <leader>e :Geeknote<CR>
+noremap <leader>c :reg<CR>
+noremap <leader>s :lclose<CR>
+noremap <leader>S :Errors<CR>
 
 let g:searchant_map_stop = 0
 nmap <leader>/ <Plug>SearchantStop
@@ -66,8 +73,6 @@ let g:airline_symbols.space = "\ua0"
 call plug#begin('~/.vim/plugged')
 
 Plug 'chriskempson/base16-vim'
-
-Plug 'vim-scripts/AutoComplPop'
 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -102,10 +107,14 @@ Plug 'junegunn/fzf.vim'
 
 Plug 'tpope/vim-fugitive'
 
+Plug 'airblade/vim-gitgutter'
+
 Plug 'neilagabriel/vim-geeknote'
 let g:GeeknoteFormat="markdown"
 
-Plug 'airblade/vim-gitgutter'
+Plug 'ternjs/tern_for_vim'
+
+Plug 'valloric/youcompleteme'
 
 call plug#end()
 
