@@ -19,4 +19,8 @@ I then use a combination a iterm base16shell, and base16shell6vim themes.
         `:PlugInstall`
 *Some plugins need further work to install e.g. YouCompleteMe, Tern etc.*
 
-    
+###Learning Vim?
+Set this as your background
+[![VimBackground](https://cdn.shopify.com/s/files/1/0165/4168/files/preview.png)](https://cdn.shopify.com/s/files/1/0165/4168/files/preview.png)
+
+
