@@ -12,6 +12,7 @@ set incsearch
 set expandtab
 set wildmenu
 set backspace=indent,eol,start
+au BufRead,BufNewFile *.hbs setfiletype html
 
 " Autocomplete
 set completeopt=longest,menuone
@@ -23,6 +24,7 @@ set ruler
 syntax enable
 set smarttab
 set shiftwidth=4
+set softtabstop=4
 set tabstop=4
 set lbr
 set tw=500
@@ -35,6 +37,7 @@ set laststatus=2
 set ttimeoutlen=50
 set encoding=utf-8
 let g:netrw_liststyle=3 "Explorer Style
+set nospell
 
 " Shortcuts "
 let mapleader = ","
@@ -54,6 +57,7 @@ noremap <leader>C :Errors<CR>
 noremap <leader>g :TernDef<CR>
 noremap <leader>d :TernDoc<CR>
 noremap <leader>r :TernRename<CR>
+noremap <leader>y :w !pbcopy<CR>
 
 
 let g:searchant_map_stop = 0
@@ -97,6 +101,9 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute " ,"trimming empty <", "unescaped &" , "lacks \"action", "is not recognized!", "discarding unexpected"]
+let g:syntastic_javascript_checkers = ['jsxhint']
+let g:syntastic_javascript_jsxhint_exec = 'jsx-jshint-wrapper'
 
 Plug 'jiangmiao/auto-pairs'
 
@@ -104,7 +111,7 @@ Plug 'itchyny/vim-cursorword'
 
 Plug 'timakro/vim-searchant'
 
-Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle'  }
 
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
@@ -126,6 +133,13 @@ let g:ycm_add_preview_to_completeopt = 0
 set completeopt-=preview
 
 Plug 'tpope/vim-commentary'
+
+Plug 'mxw/vim-jsx', { 'for': [ 'javascript', 'jsx' ] }
+
+Plug 'StanAngeloff/php.vim'
+
+Plug 'alvan/vim-closetag'
+let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.php"
 
 call plug#end()
 
