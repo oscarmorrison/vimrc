@@ -121,8 +121,9 @@ Plug 'itchyny/vim-cursorword'
 
 Plug 'timakro/vim-searchant'
 
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle'  }
+Plug 'scrooloose/nerdtree'
 let NERDTreeShowHidden=1
+let NERDTreeMapOpenInTab='\r'
 
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
