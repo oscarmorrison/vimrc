@@ -41,8 +41,8 @@ set nospell
 
 " Shortcuts "
 let mapleader = ","
-nnoremap <leader>n :NERDTreeToggle<CR>
-nnoremap <leader>f :NERDTreeFind<CR>
+nnoremap <leader>n :NERDTreeTabsToggle<CR>
+nnoremap <leader>f :NERDTreeTabsFind<CR>
 nnoremap <leader>t :Files<CR>
 nnoremap <leader>b :Buffers<CR>
 nnoremap <leader>G :Commits<CR>
@@ -58,6 +58,9 @@ noremap <leader>g :TernDef<CR>
 noremap <leader>d :TernDoc<CR>
 noremap <leader>r :TernRename<CR>
 noremap <leader>y :w !pbcopy<CR>
+noremap <leader>s :split<CR>
+nnoremap <leader>w /\s\+$
+nnoremap <leader>o :on<CR>
 
 " Abbreviations
 iabbrev <?p <?php?><Left><Left>
@@ -112,8 +115,8 @@ let g:syntastic_html_tidy_quiet_messages = { 'regex': [
             \'<input> attribute .\{-\} lacks value',
             \'lacks "src" attribute',
             \] }
-let g:syntastic_javascript_checkers = ['jsxhint']
-let g:syntastic_javascript_jsxhint_exec = 'jsx-jshint-wrapper'
+let g:syntastic_javascript_checkers = ['eslint']
+
 
 Plug 'jiangmiao/auto-pairs'
 
@@ -124,6 +127,10 @@ Plug 'timakro/vim-searchant'
 Plug 'scrooloose/nerdtree'
 let NERDTreeShowHidden=1
 let NERDTreeMapOpenInTab='\r'
+let NERDTreeIgnore = ['\.DS_Store$']
+
+Plug 'jistr/vim-nerdtree-tabs'
+let g:NERDTreeMapOpenInTab = '<2-LeftMouse>'
 
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
@@ -146,6 +153,7 @@ set completeopt-=preview
 
 Plug 'tpope/vim-commentary'
 
+Plug 'pangloss/vim-javascript', { 'for': [ 'javascript', 'jsx' ] }
 Plug 'mxw/vim-jsx', { 'for': [ 'javascript', 'jsx' ] }
 
 Plug 'StanAngeloff/php.vim'
@@ -153,7 +161,7 @@ Plug 'StanAngeloff/php.vim'
 Plug 'shawncplus/phpcomplete.vim'
 
 Plug 'alvan/vim-closetag'
-let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.php"
+let g:closetag_filenames = "*.jsx, *.html,*.xhtml,*.phtml,*.php"
 
 Plug 'jwalton512/vim-blade'
 
