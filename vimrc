@@ -168,12 +168,12 @@ Plug 'jwalton512/vim-blade'
 
 Plug 'Valloric/MatchTagAlways'
 let g:mta_filetypes = {
-    \ 'jsx' : 1,
+    \'javascript.jsx': 1,
     \ 'html' : 1,
     \ 'xhtml' : 1,
     \ 'xml' : 1,
     \ 'jinja' : 1,
-    \}
+\}
 
 call plug#end()
 
