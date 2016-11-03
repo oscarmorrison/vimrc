@@ -61,6 +61,7 @@ noremap <leader>y :w !pbcopy<CR>
 noremap <leader>s :split<CR>
 nnoremap <leader>w /\s\+$
 nnoremap <leader>o :on<CR>
+nnoremap <leader>l :MtaJumpToOtherTag<CR>
 
 " Abbreviations
 iabbrev <?p <?php?><Left><Left>
@@ -161,9 +162,18 @@ Plug 'StanAngeloff/php.vim'
 Plug 'shawncplus/phpcomplete.vim'
 
 Plug 'alvan/vim-closetag'
-let g:closetag_filenames = "*.jsx, *.html,*.xhtml,*.phtml,*.php"
+let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.php,*.jsx"
 
 Plug 'jwalton512/vim-blade'
+
+Plug 'Valloric/MatchTagAlways'
+let g:mta_filetypes = {
+    \ 'jsx' : 1,
+    \ 'html' : 1,
+    \ 'xhtml' : 1,
+    \ 'xml' : 1,
+    \ 'jinja' : 1,
+    \}
 
 call plug#end()
 
