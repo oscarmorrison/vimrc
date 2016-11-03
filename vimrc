@@ -154,8 +154,8 @@ set completeopt-=preview
 
 Plug 'tpope/vim-commentary'
 
-Plug 'pangloss/vim-javascript', { 'for': [ 'javascript', 'jsx' ] }
-Plug 'mxw/vim-jsx', { 'for': [ 'javascript', 'jsx' ] }
+Plug 'pangloss/vim-javascript', { 'for': [ 'javascript', 'javascript.jsx' ] }
+Plug 'mxw/vim-jsx', { 'for': [ 'javascript', 'javascript.jsx' ] }
 
 Plug 'StanAngeloff/php.vim'
 
