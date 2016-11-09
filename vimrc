@@ -62,6 +62,10 @@ noremap <leader>s :split<CR>
 nnoremap <leader>w /\s\+$
 nnoremap <leader>o :on<CR>
 nnoremap <leader>l :MtaJumpToOtherTag<CR>
+nnoremap <leader>x :ColorHEX<CR>
+nnoremap <leader># :set nonumber!<CR>
+inoremap jk <esc>
+inoremap kj <esc>
 
 " Abbreviations
 iabbrev <?p <?php?><Left><Left>
@@ -137,6 +141,7 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'  }
 Plug 'junegunn/fzf.vim'
+let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 
 Plug 'tpope/vim-fugitive'
 
@@ -174,6 +179,9 @@ let g:mta_filetypes = {
     \ 'xml' : 1,
     \ 'jinja' : 1,
 \}
+
+Plug 'iandoe/vim-osx-colorpicker'
+let g:colorpicker_app = 'iTerm.app'
 
 call plug#end()
 
