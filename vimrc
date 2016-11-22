@@ -48,8 +48,7 @@ nnoremap <leader>b :Buffers<CR>
 nnoremap <leader>G :Commits<CR>
 nnoremap <leader>m :bn<CR>
 nnoremap <leader>M :bp<CR>
-nnoremap <leader>B :Bclose<CR>
-nnoremap <leader>W :bd<CR>
+nnoremap <leader>B :bd<CR>
 noremap <leader>e :Geeknote<CR>
 noremap <leader>c :reg<CR>
 noremap <leader>c :lclose<CR>
@@ -64,6 +63,9 @@ nnoremap <leader>o :on<CR>
 nnoremap <leader>l :MtaJumpToOtherTag<CR>
 nnoremap <leader>x :ColorHEX<CR>
 nnoremap <leader># :set nonumber!<CR>
+nnoremap <2-LeftMouse> gf
+
+"Alternative ESC Key
 inoremap jk <esc>
 inoremap kj <esc>
 
@@ -75,7 +77,7 @@ nmap <leader>/ <Plug>SearchantStop
 
 
 if has("mouse")
-	set mouse=a
+	set mouse+=a
 endif
 
 autocmd BufWritePre *.py,*.js :%s/\s\+$//e
