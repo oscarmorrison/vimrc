@@ -68,6 +68,8 @@ nnoremap <2-LeftMouse> gf
 "Alternative ESC Key
 inoremap jk <esc>
 inoremap kj <esc>
+inoremap ;' <esc>
+inoremap '; <esc>
 
 " Abbreviations
 iabbrev <?p <?php?><Left><Left>
