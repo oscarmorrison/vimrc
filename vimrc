@@ -41,8 +41,8 @@ set nospell
 
 " Shortcuts "
 let mapleader = ","
-nnoremap <leader>n :NERDTreeTabsToggle<CR>
-nnoremap <leader>f :NERDTreeTabsFind<CR>
+nnoremap <leader>n :NERDTreeToggle<CR>
+nnoremap <leader>f :NERDTreeFind<CR>
 nnoremap <leader>t :Files<CR>
 nnoremap <leader>b :Buffers<CR>
 nnoremap <leader>G :Commits<CR>
@@ -137,8 +137,6 @@ Plug 'scrooloose/nerdtree'
 let NERDTreeShowHidden=1
 let NERDTreeMapOpenInTab='\r'
 let NERDTreeIgnore = ['\.DS_Store$']
-
-Plug 'jistr/vim-nerdtree-tabs'
 let g:NERDTreeMapOpenInTab = '<2-LeftMouse>'
 
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
