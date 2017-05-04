@@ -1,6 +1,7 @@
 " VIMRC - Oscar Morrison - me@oscarmorrison.com "
 
 " General "
+set eol
 set history=500
 filetype plugin on
 filetype indent on
@@ -39,6 +40,10 @@ set encoding=utf-8
 let g:netrw_liststyle=3 "Explorer Style
 set nospell
 
+" Abbreviations "
+iabbrev =- =>
+inoremap -- ->
+
 " Shortcuts "
 let mapleader = ","
 nnoremap <leader>n :NERDTreeToggle<CR>
@@ -63,7 +68,7 @@ nnoremap <leader>o :on<CR>
 nnoremap <leader>l :MtaJumpToOtherTag<CR>
 nnoremap <leader>x :ColorHEX<CR>
 nnoremap <leader># :set nonumber!<CR>
-nnoremap <2-LeftMouse> gf
+nnoremap <2-LeftMouse> <c-w>gf
 
 "Alternative ESC Key
 inoremap jk <esc>
@@ -136,6 +141,7 @@ Plug 'timakro/vim-searchant'
 Plug 'scrooloose/nerdtree'
 let NERDTreeShowHidden=1
 let NERDTreeMapOpenInTab='\r'
+let NERDTreeMapOpenInTab='<ENTER>'
 let NERDTreeIgnore = ['\.DS_Store$']
 let g:NERDTreeMapOpenInTab = '<2-LeftMouse>'
 
@@ -163,6 +169,7 @@ Plug 'tpope/vim-commentary'
 
 Plug 'pangloss/vim-javascript', { 'for': [ 'javascript', 'javascript.jsx' ] }
 Plug 'mxw/vim-jsx', { 'for': [ 'javascript', 'javascript.jsx' ] }
+let g:jsx_ext_required = 0
 
 Plug 'StanAngeloff/php.vim'
 
@@ -185,6 +192,10 @@ let g:mta_filetypes = {
 Plug 'iandoe/vim-osx-colorpicker'
 let g:colorpicker_app = 'iTerm.app'
 
+Plug 'tpope/vim-abolish'
+
+Plug 'jelera/vim-javascript-syntax'
+
 call plug#end()
 
 " Base16 "
@@ -196,3 +207,6 @@ endif
 highlight IncSearch cterm=NONE ctermbg=lightblue
 highlight Search cterm=NONE ctermbg=lightblue
 highlight SearchCurrent ctermfg=DarkGrey ctermbg=white
+hi link javaScriptTemplateDelim String
+hi link javaScriptTemplateVar Text
+hi link javaScriptTemplateString String
