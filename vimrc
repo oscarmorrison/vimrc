@@ -11,6 +11,8 @@ set smartcase
 set hlsearch
 set incsearch
 set expandtab
+set clipboard=unnamed
+
 set wildmenu
 set backspace=indent,eol,start
 au BufRead,BufNewFile *.hbs setfiletype html
@@ -48,7 +50,10 @@ inoremap -- ->
 let mapleader = ","
 nnoremap <leader>n :NERDTreeToggle<CR>
 nnoremap <leader>f :NERDTreeFind<CR>
+nnoremap <leader>F :CtrlSF<CR>
+nnoremap <leader>O :CtrlSFOpen<CR>
 nnoremap <leader>t :Files<CR>
+nnoremap <leader>a :Ag<CR>
 nnoremap <leader>b :Buffers<CR>
 nnoremap <leader>G :Commits<CR>
 nnoremap <leader>m :bn<CR>
@@ -129,8 +134,8 @@ let g:syntastic_html_tidy_quiet_messages = { 'regex': [
             \'<input> attribute .\{-\} lacks value',
             \'lacks "src" attribute',
             \] }
+let g:syntastic_javascript_eslint_exe='$(npm bin)/eslint'
 let g:syntastic_javascript_checkers = ['eslint']
-
 
 Plug 'jiangmiao/auto-pairs'
 
@@ -196,12 +201,14 @@ Plug 'tpope/vim-abolish'
 
 Plug 'jelera/vim-javascript-syntax'
 
+Plug 'dyng/ctrlsf.vim'
+
 call plug#end()
 
 " Base16 "
 if filereadable(expand("~/.vimrc_background"))
-  let base16colorspace=256
-  source ~/.vimrc_background
+    let base16colorspace=256
+    source ~/.vimrc_background
 endif
 
 highlight IncSearch cterm=NONE ctermbg=lightblue
@@ -210,3 +217,9 @@ highlight SearchCurrent ctermfg=DarkGrey ctermbg=white
 hi link javaScriptTemplateDelim String
 hi link javaScriptTemplateVar Text
 hi link javaScriptTemplateString String
+hi htmlArg gui=italic
+hi Comment gui=italic
+hi Type    gui=italic
+hi htmlArg cterm=italic
+hi Comment cterm=italic
+hi Type    cterm=italic
