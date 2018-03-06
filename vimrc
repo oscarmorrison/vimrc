@@ -16,6 +16,7 @@ set clipboard=unnamed
 set wildmenu
 set backspace=indent,eol,start
 au BufRead,BufNewFile *.hbs setfiletype html
+au BufRead,BufNewFile *.edge setfiletype html
 
 " Autocomplete
 set completeopt=longest,menuone
@@ -42,15 +43,21 @@ set encoding=utf-8
 let g:netrw_liststyle=3 "Explorer Style
 set nospell
 
-" Abbreviations "
+" Tettra Abbreviations "
+iabbrev <?p <?php?><Left><Left>
 iabbrev =- =>
 inoremap -- ->
+inoremap <?? <?php
+inoremap <?? <?php
+inoremap cnl console.log()<Left>
+inoremap ddd dd("");<Left><Left><Left>
 
 " Shortcuts "
 let mapleader = ","
 nnoremap <leader>n :NERDTreeToggle<CR>
 nnoremap <leader>f :NERDTreeFind<CR>
 nnoremap <leader>F :CtrlSF<CR>
+vnoremap <leader>F :CtrlSF<CR>
 nnoremap <leader>O :CtrlSFOpen<CR>
 nnoremap <leader>t :Files<CR>
 nnoremap <leader>a :Ag<CR>
@@ -66,7 +73,7 @@ noremap <leader>C :Errors<CR>
 noremap <leader>g :TernDef<CR>
 noremap <leader>d :TernDoc<CR>
 noremap <leader>r :TernRename<CR>
-noremap <leader>y :w !pbcopy<CR>
+noremap <leader>y :w !pbopy<CR>
 noremap <leader>s :split<CR>
 nnoremap <leader>w /\s\+$
 nnoremap <leader>o :on<CR>
@@ -75,14 +82,18 @@ nnoremap <leader>x :ColorHEX<CR>
 nnoremap <leader># :set nonumber!<CR>
 nnoremap <2-LeftMouse> <c-w>gf
 
-"Alternative ESC Key
+" Special short cuts for delete and paste to black hole register
+noremap <LEADER>d "_d
+noremap <LEADER>p "_dp
+
+" Run current buffer in node
+nnoremap <leader>R :!/usr/local/bin/node %<CR>
+
+" Alternative ESC Key
 inoremap jk <esc>
 inoremap kj <esc>
 inoremap ;' <esc>
 inoremap '; <esc>
-
-" Abbreviations
-iabbrev <?p <?php?><Left><Left>
 
 let g:searchant_map_stop = 0
 nmap <leader>/ <Plug>SearchantStop
@@ -103,7 +114,7 @@ if !exists('g:airline_symbols')
 endif
 let g:airline_symbols.space = "\ua0"
 
-" Vim Plug "
+"~~~~~~ Vim Plug ~~~~~~"
 call plug#begin('~/.vim/plugged')
 
 Plug 'chriskempson/base16-vim'
@@ -172,16 +183,18 @@ set completeopt-=preview
 
 Plug 'tpope/vim-commentary'
 
-Plug 'pangloss/vim-javascript', { 'for': [ 'javascript', 'javascript.jsx' ] }
-Plug 'mxw/vim-jsx', { 'for': [ 'javascript', 'javascript.jsx' ] }
-let g:jsx_ext_required = 0
+" Plug 'pangloss/vim-javascript', { 'for': [ 'javascript', 'javascript.jsx' ] }
+" Plug 'mxw/vim-jsx', { 'for': [ 'javascript', 'javascript.jsx' ] }
+" let g:jsx_ext_required = 0
+
+Plug 'chemzqm/vim-jsx-improve'
 
 Plug 'StanAngeloff/php.vim'
 
 Plug 'shawncplus/phpcomplete.vim'
 
 Plug 'alvan/vim-closetag'
-let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.php,*.jsx"
+let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.php,*.jsx,*.edge"
 
 Plug 'jwalton512/vim-blade'
 
