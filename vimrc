@@ -23,7 +23,6 @@ set completeopt=longest,menuone
 set splitbelow
 
 " Visual "
-" set so=40
 set ruler
 syntax enable
 set smarttab
