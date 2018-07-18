@@ -65,7 +65,6 @@ nnoremap <leader>G :Commits<CR>
 nnoremap <leader>m :bn<CR>
 nnoremap <leader>M :bp<CR>
 nnoremap <leader>B :bd<CR>
-noremap <leader>e :Geeknote<CR>
 noremap <leader>c :reg<CR>
 noremap <leader>c :lclose<CR>
 noremap <leader>C :Errors<CR>
@@ -87,12 +86,6 @@ noremap <LEADER>p "_dp
 
 " Run current buffer in node
 nnoremap <leader>R :!/usr/local/bin/node %<CR>
-
-" Alternative ESC Key
-inoremap jk <esc>
-inoremap kj <esc>
-inoremap ;' <esc>
-inoremap '; <esc>
 
 let g:searchant_map_stop = 0
 nmap <leader>/ <Plug>SearchantStop
@@ -169,9 +162,6 @@ let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 Plug 'tpope/vim-fugitive'
 
 Plug 'airblade/vim-gitgutter'
-
-Plug 'neilagabriel/vim-geeknote'
-let g:GeeknoteFormat="markdown"
 
 Plug 'ternjs/tern_for_vim'
 
