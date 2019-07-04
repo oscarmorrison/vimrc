@@ -1,4 +1,8 @@
 " VIMRC - Oscar Morrison - me@oscarmorrison.com "
+"TODO: REMOVE THIS https://github.com/vim/vim/issues/3117
+if has('python3')
+  silent! python3 1
+endif
 
 " General "
 set eol
@@ -17,6 +21,7 @@ set wildmenu
 set backspace=indent,eol,start
 au BufRead,BufNewFile *.hbs setfiletype html
 au BufRead,BufNewFile *.edge setfiletype html
+au BufRead,BufNewFile *.jinja setfiletype html
 
 " Autocomplete
 set completeopt=longest,menuone
@@ -43,19 +48,16 @@ let g:netrw_liststyle=3 "Explorer Style
 set nospell
 
 " Tettra Abbreviations "
-iabbrev <?p <?php?><Left><Left>
-iabbrev =- =>
+inoremap =- =>
 inoremap -- ->
-inoremap <?? <?php
-inoremap <?? <?php
-inoremap cnl console.log()<Left>
-inoremap ddd dd("");<Left><Left><Left>
+iabbrev <?p <?php?><Left><Left>
+" inoremap cnl console.log()<Left>
+iabbrev ddd dd("");<Left><Left><Left>
 
 " Shortcuts "
 let mapleader = ","
 nnoremap <leader>n :NERDTreeToggle<CR>
 nnoremap <leader>f :NERDTreeFind<CR>
-nnoremap <leader>F :CtrlSF<CR>
 vnoremap <leader>F :CtrlSF<CR>
 nnoremap <leader>O :CtrlSFOpen<CR>
 nnoremap <leader>t :Files<CR>
@@ -65,7 +67,6 @@ nnoremap <leader>G :Commits<CR>
 nnoremap <leader>m :bn<CR>
 nnoremap <leader>M :bp<CR>
 nnoremap <leader>B :bd<CR>
-noremap <leader>c :reg<CR>
 noremap <leader>c :lclose<CR>
 noremap <leader>C :Errors<CR>
 noremap <leader>g :TernDef<CR>
@@ -78,6 +79,7 @@ nnoremap <leader>o :on<CR>
 nnoremap <leader>l :MtaJumpToOtherTag<CR>
 nnoremap <leader>x :ColorHEX<CR>
 nnoremap <leader># :set nonumber!<CR>
+nnoremap <leader>T :SyntasticToggleMode<CR>
 nnoremap <2-LeftMouse> <c-w>gf
 
 " Special short cuts for delete and paste to black hole register
@@ -140,6 +142,9 @@ let g:syntastic_html_tidy_quiet_messages = { 'regex': [
 let g:syntastic_javascript_eslint_exe='$(npm bin)/eslint'
 let g:syntastic_javascript_checkers = ['eslint']
 
+"maybreak python stuff
+let g:syntastic_python_python_exec = '/usr/local/bin/python3'
+
 Plug 'jiangmiao/auto-pairs'
 
 Plug 'itchyny/vim-cursorword'
@@ -175,6 +180,7 @@ Plug 'tpope/vim-commentary'
 " Plug 'pangloss/vim-javascript', { 'for': [ 'javascript', 'javascript.jsx' ] }
 " Plug 'mxw/vim-jsx', { 'for': [ 'javascript', 'javascript.jsx' ] }
 " let g:jsx_ext_required = 0
+Plug 'jelera/vim-javascript-syntax'
 
 Plug 'chemzqm/vim-jsx-improve'
 
@@ -201,9 +207,9 @@ let g:colorpicker_app = 'iTerm.app'
 
 Plug 'tpope/vim-abolish'
 
-Plug 'jelera/vim-javascript-syntax'
-
 Plug 'dyng/ctrlsf.vim'
+
+Plug 'qwertologe/nextval.vim'
 
 call plug#end()
 
