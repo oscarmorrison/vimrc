@@ -1,8 +1,4 @@
 " VIMRC - Oscar Morrison - me@oscarmorrison.com "
-"TODO: REMOVE THIS https://github.com/vim/vim/issues/3117
-if has('python3')
-  silent! python3 1
-endif
 
 " General "
 set eol
@@ -51,7 +47,7 @@ set nospell
 inoremap =- =>
 inoremap -- ->
 iabbrev <?p <?php?><Left><Left>
-" inoremap cnl console.log()<Left>
+inoremap cnl console.log()<Left>
 iabbrev ddd dd("");<Left><Left><Left>
 
 " Shortcuts "
@@ -111,6 +107,11 @@ let g:airline_symbols.space = "\ua0"
 "~~~~~~ Vim Plug ~~~~~~"
 call plug#begin('~/.vim/plugged')
 
+Plug 'github/copilot.vim'
+imap <silent> <C-j> <Plug>(copilot-next)
+imap <silent> <C-k> <Plug>(copilot-previous)
+imap <silent> <C-\> <Plug>(copilot-dismiss)
+
 Plug 'chriskempson/base16-vim'
 
 Plug 'vim-airline/vim-airline'
@@ -162,7 +163,7 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'  }
 Plug 'junegunn/fzf.vim'
-let $FZF_DEFAULT_COMMAND = 'ag -g ""'
+let $FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!{node_modules/*,.git/*}"'
 
 Plug 'tpope/vim-fugitive'
 
@@ -170,10 +171,10 @@ Plug 'airblade/vim-gitgutter'
 
 Plug 'ternjs/tern_for_vim'
 
-Plug 'valloric/youcompleteme'
-let g:ycm_autoclose_preview_window_after_completion = 1
-let g:ycm_add_preview_to_completeopt = 0
-set completeopt-=preview
+" Plug 'valloric/youcompleteme'
+" let g:ycm_autoclose_preview_window_after_completion = 1
+" let g:ycm_add_preview_to_completeopt = 0
+" set completeopt-=preview
 
 Plug 'tpope/vim-commentary'
 
@@ -211,12 +212,28 @@ Plug 'dyng/ctrlsf.vim'
 
 Plug 'qwertologe/nextval.vim'
 
+" " For auto importing file paths
+" Plug 'ludovicchabant/vim-gutentags'
+" Plug 'kristijanhusak/vim-js-file-import', {'do': 'npm install'}
+
+" New with NVIM
+Plug 'neovim/nvim-lspconfig'
+
+Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
+Plug 'jose-elias-alvarez/null-ls.nvim'
+Plug 'neovim/nvim-lspconfig'
+Plug 'jose-elias-alvarez/buftabline.nvim'
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'hrsh7th/nvim-compe'
+
 call plug#end()
 
 " Base16 "
-if filereadable(expand("~/.vimrc_background"))
-    let base16colorspace=256
-    source ~/.vimrc_background
+if exists('$BASE16_THEME')
+    \ && (!exists('g:colors_name') 
+    \ || g:colors_name != 'base16-$BASE16_THEME')
+  let base16colorspace=256
+  colorscheme base16-$BASE16_THEME
 endif
 
 highlight IncSearch cterm=NONE ctermbg=lightblue
@@ -231,3 +248,93 @@ hi Type    gui=italic
 hi htmlArg cterm=italic
 hi Comment cterm=italic
 hi Type    cterm=italic
+
+
+
+lua << EOF
+local nvim_lsp = require('lspconfig')
+
+-- Enable TypeScript Language Server
+nvim_lsp.tsserver.setup{
+    on_attach = function(client)
+        client.resolved_capabilities.document_formatting = false
+        local ts_utils = require("nvim-lsp-ts-utils")
+
+        -- defaults
+        ts_utils.setup {
+            debug = false,
+            disable_commands = false,
+            enable_import_on_completion = false,
+
+            -- eslint
+            eslint_enable_code_actions = true,
+            eslint_enable_disable_comments = true,
+            eslint_bin = "eslint",
+            eslint_config_fallback = nil,
+            eslint_enable_diagnostics = true,
+
+            -- formatting
+            enable_formatting = true,
+            formatter = "prettier",
+            formatter_config_fallback = nil,
+
+            -- parentheses completion
+            complete_parens = false,
+            signature_help_in_parens = false,
+        }
+
+        -- required to fix code action ranges
+        ts_utils.setup_client(client)
+    end,
+    flags = {
+        debounce_text_changes = 150,
+    }
+}
+
+-- Enable intelephense for PHP
+nvim_lsp.intelephense.setup{
+    settings = {
+        intelephense = {
+            files = {
+                maxSize = 5000000
+            }
+        }
+    }
+}
+EOF
+
+
+lua << EOF
+-- Autocompletion
+require'compe'.setup {
+  enabled = true;
+  autocomplete = true;
+  debug = false;
+  min_length = 1;
+  preselect = 'enable';
+  throttle_time = 80;
+  source_timeout = 200;
+  incomplete_delay = 400;
+  max_abbr_width = 100;
+  max_kind_width = 100;
+  max_menu_width = 100;
+  documentation = true;
+
+  source = {
+    path = true;
+    buffer = true;
+    calc = true;
+    nvim_lsp = true;
+    nvim_lua = true;
+    spell = true;
+    tags = true;
+    snippets_nvim = true;
+    treesitter = true;
+  };
+}
+
+-- Snippets
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+EOF
