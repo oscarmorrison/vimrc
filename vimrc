@@ -11,7 +11,7 @@ set smartcase
 set hlsearch
 set incsearch
 set expandtab
-set clipboard=unnamed
+set clipboard=unnamedplus
 
 set wildmenu
 set backspace=indent,eol,start
@@ -78,6 +78,9 @@ nnoremap <leader># :set nonumber!<CR>
 nnoremap <leader>T :SyntasticToggleMode<CR>
 nnoremap <2-LeftMouse> <c-w>gf
 
+" vim lsp goto definition
+nnoremap <leader>gd <cmd>lua vim.lsp.buf.definition()<CR>
+
 " Special short cuts for delete and paste to black hole register
 noremap <LEADER>d "_d
 noremap <LEADER>p "_dp
@@ -107,13 +110,14 @@ let g:airline_symbols.space = "\ua0"
 "~~~~~~ Vim Plug ~~~~~~"
 call plug#begin('~/.vim/plugged')
 
-Plug 'github/copilot.vim'
-imap <silent> <C-j> <Plug>(copilot-next)
-imap <silent> <C-k> <Plug>(copilot-previous)
-imap <silent> <C-\> <Plug>(copilot-dismiss)
+" Plug 'github/copilot.vim'
+" imap <silent> <C-j> <Plug>(copilot-next)
+" imap <silent> <C-k> <Plug>(copilot-previous)
+" imap <silent> <C-\> <Plug>(copilot-dismiss)
+
+Plug 'Exafunction/codeium.vim'
 
 Plug 'chriskempson/base16-vim'
-
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 let g:airline_powerline_fonts = 1
@@ -142,6 +146,7 @@ let g:syntastic_html_tidy_quiet_messages = { 'regex': [
             \] }
 let g:syntastic_javascript_eslint_exe='$(npm bin)/eslint'
 let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_javascript_eslint_args = ['--config', '.eslintrc.json']
 
 "maybreak python stuff
 let g:syntastic_python_python_exec = '/usr/local/bin/python3'
@@ -163,7 +168,7 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'  }
 Plug 'junegunn/fzf.vim'
-let $FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!{node_modules/*,.git/*}"'
+let $FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!{node_modules/*,.git/*,vendor/*}"'
 
 Plug 'tpope/vim-fugitive'
 
@@ -216,6 +221,12 @@ Plug 'qwertologe/nextval.vim'
 " Plug 'ludovicchabant/vim-gutentags'
 " Plug 'kristijanhusak/vim-js-file-import', {'do': 'npm install'}
 
+" Enable tab completion
+" temprorarily while copilot not working
+" set wildmode=list:longest
+" set wildmenu
+" set wildignorecase
+
 " New with NVIM
 Plug 'neovim/nvim-lspconfig'
 
@@ -225,15 +236,24 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'jose-elias-alvarez/buftabline.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'hrsh7th/nvim-compe'
+Plug 'jamessan/vim-gnupg'
+autocmd FileType gpg if expand("%:e") == 'asc' | set filetype=markdown | endif
+let g:GPGPreferArmor=1
+let g:GPGDefaultRecipients=["me@oscarmorrison.com"]
+Plug 'junegunn/goyo.vim'
+
+Plug 'glidenote/newdayone.vim'
 
 call plug#end()
 
-" Base16 "
-if exists('$BASE16_THEME')
-    \ && (!exists('g:colors_name') 
-    \ || g:colors_name != 'base16-$BASE16_THEME')
-  let base16colorspace=256
-  colorscheme base16-$BASE16_THEME
+" Base16
+let base16_theme = expand('$BASE16_THEME')
+if base16_theme == ""
+    let base16_theme = "oceanicnext"
+endif
+if (!exists('g:colors_name') || g:colors_name != 'base16-'.base16_theme)
+    let base16colorspace=256
+    execute 'colorscheme base16-'.base16_theme
 endif
 
 highlight IncSearch cterm=NONE ctermbg=lightblue
@@ -333,8 +353,31 @@ require'compe'.setup {
   };
 }
 
+-- Just temp, while co-pilot not working
+vim.api.nvim_set_keymap('i', '<Tab>', 'pumvisible() ? "\\<C-n>" : "\\<Tab>"', {expr = true})
+vim.api.nvim_set_keymap('i', '<S-Tab>', 'pumvisible() ? "\\<C-p>" : "\\<S-Tab>"', {expr = true})
+
 -- Snippets
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 EOF
+
+command! Focus call Focus()
+let g:focused = 0
+function! Focus()
+  if g:focused == 0
+    " magically enable focus stuff
+    let g:focused = 1
+    " enable distraction-free with a 120 column wide buffer
+    :Goyo 120
+    set filetype=markdown
+  else
+    " disable all of it again
+    let g:focused = 0
+    :Goyo
+  endif
+endfunction
+
+
+autocmd FileType asc call Focus()
