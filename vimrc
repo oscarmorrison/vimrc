@@ -116,6 +116,7 @@ call plug#begin('~/.vim/plugged')
 " imap <silent> <C-\> <Plug>(copilot-dismiss)
 
 Plug 'Exafunction/codeium.vim'
+nnoremap <C-Tab> :call codeium#CycleCompletions(1)<CR>
 
 Plug 'chriskempson/base16-vim'
 Plug 'vim-airline/vim-airline'
@@ -131,6 +132,7 @@ Plug 'scrooloose/syntastic'
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
+set statusline+=%3*%{codeium#GetStatusString()}
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
