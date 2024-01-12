@@ -374,10 +374,14 @@ function! Focus()
     " enable distraction-free with a 120 column wide buffer
     :Goyo 120
     set filetype=markdown
+    " disable CodeiumDisable
+    :CodeiumDisable
   else
     " disable all of it again
     let g:focused = 0
     :Goyo
+    " disable CodeiumDisable
+    :CodeiumEnable
   endif
 endfunction
 
