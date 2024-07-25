@@ -15,8 +15,6 @@ set clipboard=unnamedplus
 
 set wildmenu
 set backspace=indent,eol,start
-
-au BufRead,BufNewFile *.prisma setfiletype javascript
 au BufRead,BufNewFile *.hbs setfiletype html
 au BufRead,BufNewFile *.edge setfiletype html
 au BufRead,BufNewFile *.jinja setfiletype html
@@ -49,19 +47,14 @@ set nospell
 inoremap =- =>
 inoremap -- ->
 iabbrev <?p <?php?><Left><Left>
-autocmd FileType php inoremap =- =>
-autocmd FileType php inoremap -- ->
-autocmd FileType php iabbrev <?p <?php?><Left><Left>
 inoremap cnl console.log()<Left>
 iabbrev ddd dd("");<Left><Left><Left>
-autocmd FileType php iabbrev dd dd("");<Left><Left><Left>
 
 " Shortcuts "
 let mapleader = ","
 nnoremap <leader>n :NERDTreeToggle<CR>
 nnoremap <leader>f :NERDTreeFind<CR>
 vnoremap <leader>F :CtrlSF<CR>
-nnoremap <leader>F :CtrlSF<CR>
 nnoremap <leader>O :CtrlSFOpen<CR>
 nnoremap <leader>t :Files<CR>
 nnoremap <leader>a :Ag<CR>
@@ -75,9 +68,6 @@ noremap <leader>C :Errors<CR>
 noremap <leader>g :TernDef<CR>
 noremap <leader>d :TernDoc<CR>
 noremap <leader>r :TernRename<CR>
-" noremap <leader>g :TernDef<CR>
-" noremap <leader>d :TernDoc<CR>
-" noremap <leader>r :TernRename<CR>
 noremap <leader>y :w !pbopy<CR>
 noremap <leader>s :split<CR>
 nnoremap <leader>w /\s\+$
@@ -120,14 +110,6 @@ let g:airline_symbols.space = "\ua0"
 "~~~~~~ Vim Plug ~~~~~~"
 call plug#begin('~/.vim/plugged')
 
-" Plug 'github/copilot.vim'
-" imap <silent> <C-j> <Plug>(copilot-next)
-" imap <silent> <C-k> <Plug>(copilot-previous)
-" imap <silent> <C-\> <Plug>(copilot-dismiss)
-
-Plug 'Exafunction/codeium.vim'
-nnoremap <C-Tab> :call codeium#CycleCompletions(1)<CR>
-
 Plug 'chriskempson/base16-vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -148,7 +130,6 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute " ,"trimming empty <", "unescaped &" , "lacks \"action", "is not recognized!", "discarding unexpected"] 
-let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute " ,"trimming empty <", "unescaped &" , "lacks \"action", "is not recognized!", "discarding unexpected"]
 let g:syntastic_html_tidy_quiet_messages = { 'regex': [
             \'proprietary attribute',
             \'is not recognized!',
@@ -163,8 +144,6 @@ let g:syntastic_javascript_eslint_args = ['--config', '.eslintrc.json']
 
 "maybreak python stuff
 let g:syntastic_python_python_exec = '/usr/local/bin/python3'
-let g:python3_host_prog = '/Library/Frameworks/Python.framework/Versions/3.12/bin/python3'
-let g:syntastic_python_python_exec='/Library/Frameworks/Python.framework/Versions/3.12/bin/python3'
 
 Plug 'jiangmiao/auto-pairs'
 
@@ -186,28 +165,10 @@ Plug 'junegunn/fzf.vim'
 let $FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!{node_modules/*,.git/*,vendor/*}"'
 
 Plug 'tpope/vim-fugitive'
-
 Plug 'airblade/vim-gitgutter'
 
-Plug 'ternjs/tern_for_vim'
-
-" Plug 'valloric/youcompleteme'
-" let g:ycm_autoclose_preview_window_after_completion = 1
-" let g:ycm_add_preview_to_completeopt = 0
-" set completeopt-=preview
-
 Plug 'tpope/vim-commentary'
-
-" Plug 'pangloss/vim-javascript', { 'for': [ 'javascript', 'javascript.jsx' ] }
-" Plug 'mxw/vim-jsx', { 'for': [ 'javascript', 'javascript.jsx' ] }
-" let g:jsx_ext_required = 0
 Plug 'jelera/vim-javascript-syntax'
-
-Plug 'chemzqm/vim-jsx-improve'
-
-Plug 'StanAngeloff/php.vim'
-
-Plug 'shawncplus/phpcomplete.vim'
 
 Plug 'alvan/vim-closetag'
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.php,*.jsx,*.edge"
@@ -226,42 +187,12 @@ let g:mta_filetypes = {
 Plug 'iandoe/vim-osx-colorpicker'
 let g:colorpicker_app = 'iTerm.app'
 
-Plug 'tpope/vim-abolish'
-
 Plug 'dyng/ctrlsf.vim'
 
-Plug 'qwertologe/nextval.vim'
-
-" " For auto importing file paths
-" Plug 'ludovicchabant/vim-gutentags'
-" Plug 'kristijanhusak/vim-js-file-import', {'do': 'npm install'}
-
-" Enable tab completion
-" temprorarily while copilot not working
-" set wildmode=list:longest
-" set wildmenu
-" set wildignorecase
-
-" New with NVIM
-Plug 'neovim/nvim-lspconfig'
-
-Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
-Plug 'jose-elias-alvarez/null-ls.nvim'
-Plug 'neovim/nvim-lspconfig'
-Plug 'jose-elias-alvarez/buftabline.nvim'
-Plug 'kyazdani42/nvim-web-devicons'
-Plug 'hrsh7th/nvim-compe'
-Plug 'jamessan/vim-gnupg'
-autocmd FileType gpg if expand("%:e") == 'asc' | set filetype=markdown | endif
-let g:GPGPreferArmor=1
-let g:GPGDefaultRecipients=["me@oscarmorrison.com"]
+" For focuse mode and dayone
 Plug 'junegunn/goyo.vim'
-
 Plug 'glidenote/newdayone.vim'
 
-"Tailwind
-Plug 'nvim-treesitter/nvim-treesitter'
-Plug 'luckasRanarison/tailwind-tools.nvim'
 call plug#end()
 
 " Base16
@@ -286,124 +217,6 @@ hi Type    gui=italic
 hi htmlArg cterm=italic
 hi Comment cterm=italic
 hi Type    cterm=italic
-
-command! Focus call Focus()
-let g:focused = 0
-function! Focus()
-  if g:focused == 0
-    " enable focus stuff
-    let g:focused = 1
-    " enable distraction-free with a 120 column wide buffer
-    :Goyo 120
-    set filetype=markdown
-    " disable Codium
-    :CodeiumDisable
-    " disable autocomplete
-    :lua require('compe').setup({enabled = false})
-  else
-    " disable all of it again
-    let g:focused = 0
-    :Goyo
-    " enable Codium
-    :CodeiumEnable
-    " enable autocomplete
-    :lua require('compe').setup({enabled = true})
-  endif
-endfunction
-
-autocmd! User GoyoLeave nested if !g:focused | q! | endif
-
-lua << EOF
-local nvim_lsp = require('lspconfig')
-
--- Enable TypeScript Language Server
-nvim_lsp.tsserver.setup{
-    on_attach = function(client)
-        client.resolved_capabilities.document_formatting = false
-        local ts_utils = require("nvim-lsp-ts-utils")
-
-        -- defaults
-        ts_utils.setup {
-            debug = false,
-            disable_commands = false,
-            enable_import_on_completion = false,
-
-            -- eslint
-            eslint_enable_code_actions = true,
-            eslint_enable_disable_comments = true,
-            eslint_bin = "eslint",
-            eslint_config_fallback = nil,
-            eslint_enable_diagnostics = true,
-
-            -- formatting
-            enable_formatting = true,
-            formatter = "prettier",
-            formatter_config_fallback = nil,
-
-            -- parentheses completion
-            complete_parens = false,
-            signature_help_in_parens = false,
-        }
-
-        -- required to fix code action ranges
-        ts_utils.setup_client(client)
-    end,
-    flags = {
-        debounce_text_changes = 150,
-    }
-}
-
--- Enable intelephense for PHP
-nvim_lsp.intelephense.setup{
-    settings = {
-        intelephense = {
-            files = {
-                maxSize = 5000000
-            }
-        }
-    }
-}
-EOF
-
-
-lua << EOF
--- Autocompletion
-require'compe'.setup {
-  enabled = true;
-  autocomplete = true;
-  debug = false;
-  min_length = 1;
-  preselect = 'enable';
-  throttle_time = 80;
-  source_timeout = 200;
-  incomplete_delay = 400;
-  max_abbr_width = 100;
-  max_kind_width = 100;
-  max_menu_width = 100;
-  documentation = true;
-
-  source = {
-    path = true;
-    buffer = true;
-    calc = true;
-    nvim_lsp = true;
-    nvim_lua = true;
-    spell = true;
-    tags = true;
-    snippets_nvim = true;
-    treesitter = true;
-  };
-}
-
--- Just temp, while co-pilot not working
-vim.api.nvim_set_keymap('i', '<Tab>', 'pumvisible() ? "\\<C-n>" : "\\<Tab>"', {expr = true})
-vim.api.nvim_set_keymap('i', '<S-Tab>', 'pumvisible() ? "\\<C-p>" : "\\<S-Tab>"', {expr = true})
-
--- Snippets
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-
-EOF
 
 command! Focus call Focus()
 let g:focused = 0
