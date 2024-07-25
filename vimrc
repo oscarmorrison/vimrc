@@ -193,6 +193,21 @@ Plug 'dyng/ctrlsf.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'glidenote/newdayone.vim'
 
+" AI and LSP
+Plug 'Exafunction/codeium.vim'
+Plug 'neovim/nvim-lspconfig'
+Plug 'williamboman/mason.nvim'
+Plug 'williamboman/mason-lspconfig.nvim'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'L3MON4D3/LuaSnip'
+Plug 'saadparwaiz1/cmp_luasnip'
+Plug 'VonHeikemen/lsp-zero.nvim', {'branch': 'v3.x'}
+Plug 'onsails/lspkind.nvim'
+
 call plug#end()
 
 " Base16
@@ -238,5 +253,78 @@ function! Focus()
   endif
 endfunction
 
-
 autocmd FileType asc call Focus()
+
+" ----> ----> ----> ----> ---->
+
+
+lua << EOF
+
+-- Initialize and configure the plugins
+require('mason').setup()
+require('mason-lspconfig').setup {
+    ensure_installed = { 'intelephense', 'tsserver' },
+}
+
+-- Setup nvim-cmp
+local cmp = require'cmp'
+local luasnip = require'luasnip'
+
+cmp.setup {
+    snippet = {
+        expand = function(args)
+            -- You can use any snippet plugin here
+            vim.fn["vsnip#anonymous"](args.body) -- For vim-vsnip
+            -- luasnip.lsp_expand(args.body) -- For LuaSnip users
+        end,
+    },
+    mapping = {
+        ['<C-Space>'] = cmp.mapping.complete(),
+        ['<C-e>'] = cmp.mapping.close(),
+        ['<CR>'] = cmp.mapping.confirm({ select = false }),  -- Remove select = true
+        ['<Up>'] = cmp.mapping.select_prev_item(),
+        ['<Down>'] = cmp.mapping.select_next_item(),
+    },
+    sources = {
+        { name = 'nvim_lsp' },
+        { name = 'buffer' },
+        { name = 'path' },
+        { name = 'vsnip' }, -- For vim-vsnip users
+        -- { name = 'luasnip' }, -- For LuaSnip users
+    },
+    formatting = {
+        format = require('lspkind').cmp_format({
+            with_text = true,
+            maxwidth = 50,
+            menu = ({
+                buffer = "[Buffer]",
+                nvim_lsp = "[LSP]",
+                vsnip = "[VSnip]", -- For vim-vsnip users
+                -- luasnip = "[LuaSnip]", -- For LuaSnip users
+                path = "[Path]",
+            }),
+        }),
+    },
+}
+
+-- Setup lsp-zero
+local lsp = require('lsp-zero').preset('recommended')
+
+-- Ensure the language servers are installed
+require('mason-lspconfig').setup {
+    ensure_installed = { 'tsserver', 'intelephense' },
+}
+
+-- Setup each language server using mason-lspconfig
+require('mason-lspconfig').setup_handlers {
+    function(server_name)
+        require('lspconfig')[server_name].setup(lsp.build_options(server_name, {}))
+    end,
+}
+
+-- Setup lsp-zero
+lsp.setup()
+
+-- Additional settings for LuaSnip
+require("luasnip.loaders.from_vscode").lazy_load()
+EOF
