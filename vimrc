@@ -15,6 +15,8 @@ set clipboard=unnamedplus
 
 set wildmenu
 set backspace=indent,eol,start
+
+au BufRead,BufNewFile *.prisma setfiletype javascript
 au BufRead,BufNewFile *.hbs setfiletype html
 au BufRead,BufNewFile *.edge setfiletype html
 au BufRead,BufNewFile *.jinja setfiletype html
@@ -47,14 +49,19 @@ set nospell
 inoremap =- =>
 inoremap -- ->
 iabbrev <?p <?php?><Left><Left>
+autocmd FileType php inoremap =- =>
+autocmd FileType php inoremap -- ->
+autocmd FileType php iabbrev <?p <?php?><Left><Left>
 inoremap cnl console.log()<Left>
 iabbrev ddd dd("");<Left><Left><Left>
+autocmd FileType php iabbrev dd dd("");<Left><Left><Left>
 
 " Shortcuts "
 let mapleader = ","
 nnoremap <leader>n :NERDTreeToggle<CR>
 nnoremap <leader>f :NERDTreeFind<CR>
 vnoremap <leader>F :CtrlSF<CR>
+nnoremap <leader>F :CtrlSF<CR>
 nnoremap <leader>O :CtrlSFOpen<CR>
 nnoremap <leader>t :Files<CR>
 nnoremap <leader>a :Ag<CR>
@@ -68,6 +75,9 @@ noremap <leader>C :Errors<CR>
 noremap <leader>g :TernDef<CR>
 noremap <leader>d :TernDoc<CR>
 noremap <leader>r :TernRename<CR>
+" noremap <leader>g :TernDef<CR>
+" noremap <leader>d :TernDoc<CR>
+" noremap <leader>r :TernRename<CR>
 noremap <leader>y :w !pbopy<CR>
 noremap <leader>s :split<CR>
 nnoremap <leader>w /\s\+$
@@ -138,6 +148,7 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute " ,"trimming empty <", "unescaped &" , "lacks \"action", "is not recognized!", "discarding unexpected"] 
+let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute " ,"trimming empty <", "unescaped &" , "lacks \"action", "is not recognized!", "discarding unexpected"]
 let g:syntastic_html_tidy_quiet_messages = { 'regex': [
             \'proprietary attribute',
             \'is not recognized!',
@@ -152,6 +163,8 @@ let g:syntastic_javascript_eslint_args = ['--config', '.eslintrc.json']
 
 "maybreak python stuff
 let g:syntastic_python_python_exec = '/usr/local/bin/python3'
+let g:python3_host_prog = '/Library/Frameworks/Python.framework/Versions/3.12/bin/python3'
+let g:syntastic_python_python_exec='/Library/Frameworks/Python.framework/Versions/3.12/bin/python3'
 
 Plug 'jiangmiao/auto-pairs'
 
@@ -246,6 +259,9 @@ Plug 'junegunn/goyo.vim'
 
 Plug 'glidenote/newdayone.vim'
 
+"Tailwind
+Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'luckasRanarison/tailwind-tools.nvim'
 call plug#end()
 
 " Base16
@@ -271,7 +287,31 @@ hi htmlArg cterm=italic
 hi Comment cterm=italic
 hi Type    cterm=italic
 
+command! Focus call Focus()
+let g:focused = 0
+function! Focus()
+  if g:focused == 0
+    " enable focus stuff
+    let g:focused = 1
+    " enable distraction-free with a 120 column wide buffer
+    :Goyo 120
+    set filetype=markdown
+    " disable Codium
+    :CodeiumDisable
+    " disable autocomplete
+    :lua require('compe').setup({enabled = false})
+  else
+    " disable all of it again
+    let g:focused = 0
+    :Goyo
+    " enable Codium
+    :CodeiumEnable
+    " enable autocomplete
+    :lua require('compe').setup({enabled = true})
+  endif
+endfunction
 
+autocmd! User GoyoLeave nested if !g:focused | q! | endif
 
 lua << EOF
 local nvim_lsp = require('lspconfig')
