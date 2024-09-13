@@ -54,7 +54,7 @@ iabbrev ddd dd("");<Left><Left><Left>
 let mapleader = ","
 nnoremap <leader>n :NERDTreeToggle<CR>
 nnoremap <leader>f :NERDTreeFind<CR>
-vnoremap <leader>F :CtrlSF<CR>
+vnoremap <leader>F <Plug>CtrlSFVwordPath
 nnoremap <leader>O :CtrlSFOpen<CR>
 nnoremap <leader>t :Files<CR>
 nnoremap <leader>a :Ag<CR>
@@ -208,6 +208,8 @@ Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'VonHeikemen/lsp-zero.nvim', {'branch': 'v3.x'}
 Plug 'onsails/lspkind.nvim'
 
+Plug 'madox2/vim-ai'
+
 call plug#end()
 
 " Base16
@@ -244,12 +246,14 @@ function! Focus()
     set filetype=markdown
     " disable CodeiumDisable
     :CodeiumDisable
+    lua require('cmp').setup.buffer { enabled = false }
   else
     " disable all of it again
     let g:focused = 0
     :Goyo
     " disable CodeiumDisable
     :CodeiumEnable
+    lua require('cmp').setup.buffer { enabled = true }
   endif
 endfunction
 
