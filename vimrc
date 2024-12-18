@@ -184,6 +184,9 @@ let g:mta_filetypes = {
     \ 'jinja' : 1,
 \}
 
+
+autocmd FileType jsx setlocal commentstring={/*\ %s\ */}
+
 Plug 'iandoe/vim-osx-colorpicker'
 let g:colorpicker_app = 'iTerm.app'
 
@@ -242,10 +245,10 @@ function! Focus()
     " magically enable focus stuff
     let g:focused = 1
     " enable distraction-free with a 120 column wide buffer
-    :Goyo 120
-    set filetype=markdown
     " disable CodeiumDisable
     :CodeiumDisable
+    :Goyo 120
+    set filetype=markdown
     lua require('cmp').setup.buffer { enabled = false }
   else
     " disable all of it again
@@ -266,65 +269,18 @@ lua << EOF
 
 -- Initialize and configure the plugins
 require('mason').setup()
-require('mason-lspconfig').setup {
-    ensure_installed = { 'intelephense', 'tsserver' },
-}
-
--- Setup nvim-cmp
-local cmp = require'cmp'
-local luasnip = require'luasnip'
-
-cmp.setup {
-    snippet = {
-        expand = function(args)
-            -- You can use any snippet plugin here
-            vim.fn["vsnip#anonymous"](args.body) -- For vim-vsnip
-            -- luasnip.lsp_expand(args.body) -- For LuaSnip users
-        end,
-    },
-    mapping = {
-        ['<C-Space>'] = cmp.mapping.complete(),
-        ['<C-e>'] = cmp.mapping.close(),
-        ['<CR>'] = cmp.mapping.confirm({ select = false }),  -- Remove select = true
-        ['<Up>'] = cmp.mapping.select_prev_item(),
-        ['<Down>'] = cmp.mapping.select_next_item(),
-    },
-    sources = {
-        { name = 'nvim_lsp' },
-        { name = 'buffer' },
-        { name = 'path' },
-        { name = 'vsnip' }, -- For vim-vsnip users
-        -- { name = 'luasnip' }, -- For LuaSnip users
-    },
-    formatting = {
-        format = require('lspkind').cmp_format({
-            with_text = true,
-            maxwidth = 50,
-            menu = ({
-                buffer = "[Buffer]",
-                nvim_lsp = "[LSP]",
-                vsnip = "[VSnip]", -- For vim-vsnip users
-                -- luasnip = "[LuaSnip]", -- For LuaSnip users
-                path = "[Path]",
-            }),
-        }),
-    },
-}
+require('mason-lspconfig').setup()
 
 -- Setup lsp-zero
 local lsp = require('lsp-zero').preset('recommended')
 
--- Ensure the language servers are installed
-require('mason-lspconfig').setup {
-    ensure_installed = { 'tsserver', 'intelephense' },
-}
+-- Setup each language server manually
+local lspconfig = require('lspconfig')
 
--- Setup each language server using mason-lspconfig
-require('mason-lspconfig').setup_handlers {
-    function(server_name)
-        require('lspconfig')[server_name].setup(lsp.build_options(server_name, {}))
-    end,
-}
+lspconfig.ts_ls.setup{}
+
+-- PHP
+lspconfig.intelephense.setup{}
 
 -- Setup lsp-zero
 lsp.setup()
