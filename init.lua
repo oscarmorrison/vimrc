@@ -26,6 +26,7 @@ local function Focus()
       completion = {
         enabled = false,
       },
+      autocomplete = false,
     })
     -- Remove headers and footers
     vim.opt.laststatus = 0 -- Disable status line
@@ -40,6 +41,7 @@ local function Focus()
       completion = {
         enabled = true,
       },
+      autocomplete = true,
     })
 
     -- Restore headers and footers
