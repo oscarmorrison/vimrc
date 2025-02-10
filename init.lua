@@ -1,55 +1,75 @@
--- bootstrap lazy.nvim, LazyVim and your plugins
+-- init.lua
+
+-- 1. Bootstrap LazyVim (or your chosen lazy config).
 require("config.lazy")
 
-local focused = false -- Single declaration
+local focused = false
 
 local function Focus()
   if not focused then
+    -- Enter focus mode
     focused = true
-    vim.cmd("setlocal spell") -- Enable spell checking
-    vim.cmd("Copilot disable") -- Disable Copilot
-    vim.bo.filetype = "markdown" -- Set filetype to markdown
+
+    -- Disable completions in this buffer
+    local cmp = require("cmp")
+    cmp.setup.buffer({
+      enabled = false,
+      sources = {},
+    })
+
+    -- Stop all active LSPs
+    vim.cmd("LspStop")
+
+    -- Disable mini.animate’s blinking
+    require("mini.animate").setup({
+      cursor = { enable = false },
+      scroll = { enable = false },
+      resize = { enable = false },
+      open   = { enable = false },
+      close  = { enable = false },
+    })
+
+    -- Optionally enable spell checking + set markdown
+    vim.cmd("setlocal spell")
+    vim.bo.filetype = "markdown"
 
     -- Enter Zen Mode
     require("zen-mode").toggle({
       window = {
-        width = 120, -- Set the desired width for Zen Mode
+        width = 120,
         options = {
-          number = false, -- Disable line numbers
-          relativenumber = false, -- Disable relative line numbers
+          number         = false,
+          relativenumber = false,
         },
       },
     })
-    -- Disable completion suggestions
-    vim.b.completion_enabled = false -- Disable buffer-specific completions
-    require("blink.cmp").setup({
-      completion = {
-        enabled = false,
-      },
-      autocomplete = false,
-    })
-    -- Remove headers and footers
-    vim.opt.laststatus = 0 -- Disable status line
-    vim.opt.showtabline = 0 -- Disable tabline
+
+    -- Hide status line + tab line
+    vim.opt.laststatus = 0
+    vim.opt.showtabline = 0
+
   else
+    -- Exit focus mode
     focused = false
+
+    -- Re-enable completions
+    local cmp = require("cmp")
+    cmp.setup.buffer({ enabled = true })
+
+    -- Restart LSP
+    vim.cmd("LspStart")
+
+    -- Re-enable mini.animate
+    require("mini.animate").setup()
 
     -- Exit Zen Mode
     require("zen-mode").toggle()
 
-    require("blink-cmp").setup({
-      completion = {
-        enabled = true,
-      },
-      autocomplete = true,
-    })
-
-    -- Restore headers and footers
-    vim.opt.laststatus = 2 -- Re-enable status line
-    vim.opt.showtabline = 2 -- Re-enable tabline
-    -- Enable Copilot and completions
-    vim.cmd("Copilot enable") -- Re-enable Copilot
+    -- Restore status line + tab line
+    vim.opt.laststatus = 2
+    vim.opt.showtabline = 2
   end
 end
 
+-- Create :Focus command
 vim.api.nvim_create_user_command("Focus", Focus, {})
